@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - InfraBank</title>
+</head>
+<body>
+  <h2>Welcome to InfraBank Dashboard</h2>
+
+  <h3>💰 Your Balance</h3>
+  <p id="balance">Loading...</p>
+
+  <h3>📄 Recent Transactions</h3>
+  <ul id="transactions">Loading...</ul>
+
+  <h3>💸 Fund Transfer</h3>
+  <form id="transferForm">
+    <label>Recipient: <input type="text" id="to" required></label><br>
+    <label>Amount: <input type="number" id="amount" required></label><br>
+    <button type="submit">Send Money</button>
+  </form>
+  <p id="transferResult"></p>
+
+  <script>
+    // Fetch balance
+    fetch('http://localhost:3000/balance')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('balance').textContent = data.balance;
+      })
+      .catch(err => {
+        document.getElementById('balance').textContent = 'Error loading balance.';
+      });
+
+    // Fetch transactions
+    fetch('http://localhost:3000/transactions')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('transactions');
+        list.innerHTML = '';
+        data.transactions.forEach(txn => {
+          const item = document.createElement('li');
+          item.textContent = `${txn.date} - ${txn.type} - ₹${txn.amount}`;
+          list.appendChild(item);
+        });
+      })
+      .catch(err => {
+        document.getElementById('transactions').textContent = 'Error loading transactions.';
+      });
+
+    // Transfer Form
+    document.getElementById('transferForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const to = document.getElementById('to').value;
+      const amount = document.getElementById('amount').value;
+
+      // For now just show a dummy response
+      document.getElementById('transferResult').textContent = `✅ ₹${amount} sent to ${to} (dummy logic)`;
+    });
+  </script>
+</body>
+</html>

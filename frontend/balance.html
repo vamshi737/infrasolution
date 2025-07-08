@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Account Balance - InfraBank</title>
+</head>
+<body>
+  <h2>Welcome to InfraBank</h2>
+  <p id="balance">Loading your balance...</p>
+
+  <!-- ✅ View Transactions Button -->
+  <a href="transactions.html"><button>View Transactions</button></a>
+
+  <script>
+    fetch('http://localhost:3000/balance')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('balance').innerText =
+          "Your balance is: ₹" + data.balance;
+      })
+      .catch(error => {
+        console.error('Error fetching balance:', error);
+        document.getElementById('balance').innerText = 'Error loading balance.';
+      });
+  </script>
+</body>
+</html>
