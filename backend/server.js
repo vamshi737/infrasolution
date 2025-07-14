@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
@@ -7,12 +8,12 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// ✅ MySQL connection setup
+// ✅ MySQL connection setup for Docker Compose
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Vamsi321',  // Your MySQL root password
-  database: 'bankdb'
+  host: process.env.DB_HOST || 'mysql',       // Use Compose service name
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'Vamsi321',
+  database: process.env.DB_NAME || 'bankdb'
 });
 
 db.connect(err => {
@@ -38,7 +39,7 @@ app.post('/login', (req, res) => {
   );
 });
 
-// ✅ Balance API
+// ✅ Balance API (Real DB logic can be added later)
 app.get('/balance', (req, res) => {
   const dummyBalance = 12000.75;
   res.json({ balance: dummyBalance });
@@ -75,6 +76,7 @@ app.post('/signup', (req, res) => {
 });
 
 // ✅ Start the server
-app.listen(3000, () => {
-  console.log('🚀 Server running on http://localhost:3000');
+app.listen(3000, "0.0.0.0", () => {
+    console.log("Server running on port 3000");
 });
+

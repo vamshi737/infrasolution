@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-bank
+    environment:
+      MYSQL_ROOT_PASSWORD: Vamsi321
+      MYSQL_DATABASE: bankdb
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    restart: always
+
+  backend:
+    build: ./backend
+    container_name: backend-bank
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: Vamsi321
+      DB_NAME: bankdb
+    ports:
+      - "3000:3000"
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-bank
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+    restart: always

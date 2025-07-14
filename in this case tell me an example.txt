@@ -1,0 +1,10 @@
+ in this case tell me an example 
+how the UI is taking to backend and when backend is talking to database how backend is formatting the data response how backed is rendering the output to UI
+
+
+
+
+first step -case 
+second step -phase 4 
+
+
