@@ -1,0 +1,15 @@
+Phase 5 Checkpoint – July 17, 2025
+
+✅ Completed:
+- AKS cluster (infra-aks) created under resource group infra-rg
+- `kubectl get nodes` shows STATUS = Ready
+- Context merged to local kubeconfig
+
+❌ Pending:
+- Docker image build for backend and frontend
+- Docker push to DockerHub
+- YAML file creation and application
+- Exposing frontend with LoadBalancer
+
+Next Step:
+👉 Start with backend Docker image build and push

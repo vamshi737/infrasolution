@@ -11,3 +11,8 @@ logs/
 # OS files
 .DS_Store
 Thumbs.db
+# Local-only files to ignore
+in this case tell me an example.txt
+infra Start.docx
+tell me an about.docx
+tell me an about.pdf
