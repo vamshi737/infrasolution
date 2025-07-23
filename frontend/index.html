@@ -1,9 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="refresh" content="0; url=/login.html" />
-  </head>
-  <body>
-    Redirecting to login page...
-  </body>
+<head>
+  <title>Login - InfraBank</title>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // ✅ Updated to work inside cluster
+        fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+        })
+          .then(res => res.text())
+          .then(data => {
+            if (data === '✅ Login successful') {
+              window.location.href = 'balance.html'; // ✅ Redirect to dashboard
+            } else {
+              document.getElementById('result').textContent = data;
+            }
+          })
+          .catch(err => {
+            document.getElementById('result').textContent = '❌ Error logging in.';
+            console.error(err);
+          });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h2>Login to InfraBank</h2>
+  <form id="loginForm">
+    <label>Username:</label>
+    <input type="text" id="username" required /><br><br>
+    <label>Password:</label>
+    <input type="password" id="password" required /><br><br>
+    <button type="submit">Login</button>
+  </form>
+  <p id="result"></p>
+</body>
 </html>
