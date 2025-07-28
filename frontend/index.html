@@ -11,8 +11,7 @@
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        // ✅ Updated to work inside cluster
-        fetch('/login', {
+        fetch('http://backend-service:3000/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -22,7 +21,7 @@
           .then(res => res.text())
           .then(data => {
             if (data === '✅ Login successful') {
-              window.location.href = 'balance.html'; // ✅ Redirect to dashboard
+              window.location.href = 'balance.html';
             } else {
               document.getElementById('result').textContent = data;
             }

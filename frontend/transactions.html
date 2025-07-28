@@ -8,12 +8,11 @@
   <ul id="transactions-list">Loading...</ul>
 
   <script>
-    fetch('http://localhost:3000/transactions')
+    fetch('http://backend-service:3000/transactions')
       .then(response => response.json())
       .then(data => {
         const list = document.getElementById('transactions-list');
         list.innerHTML = '';
-
         data.transactions.forEach(tx => {
           const li = document.createElement('li');
           li.textContent = `${tx.date} - ${tx.type} - ₹${tx.amount}`;

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 
   <script>
     // Fetch balance
-    fetch('http://localhost:3000/balance')
+    fetch('http://backend-service:3000/balance')
       .then(res => res.json())
       .then(data => {
         document.getElementById('balance').textContent = data.balance;
@@ -32,7 +33,7 @@
       });
 
     // Fetch transactions
-    fetch('http://localhost:3000/transactions')
+    fetch('http://backend-service:3000/transactions')
       .then(res => res.json())
       .then(data => {
         const list = document.getElementById('transactions');
@@ -53,7 +54,6 @@
       const to = document.getElementById('to').value;
       const amount = document.getElementById('amount').value;
 
-      // For now just show a dummy response
       document.getElementById('transferResult').textContent = `✅ ₹${amount} sent to ${to} (dummy logic)`;
     });
   </script>

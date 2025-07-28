@@ -1,17 +1,20 @@
-document.getElementById('loginForm').addEventListener('submit', async function (e) {
+document.getElementById('loginForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  const response = await fetch('http://localhost:3000/login', {
+  fetch('/api/login', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
-  });
-
-  const result = await response.text();
-  document.getElementById('result').textContent = result;
+  })
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('result').textContent = data;
+    })
+    .catch(err => {
+      document.getElementById('result').textContent = '❌ Login failed.';
+      console.error(err);
+    });
 });

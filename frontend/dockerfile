@@ -1,15 +1,10 @@
-# Use nginx lightweight image
 FROM nginx:alpine
 
-# Remove default nginx page
-RUN rm -rf /usr/share/nginx/html/*
+# Remove default config
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy your HTML/JS files to nginx root
+# Copy custom config
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# Copy frontend files
 COPY . /usr/share/nginx/html/
-
-# Expose port 80 (already open in NSG and service)
-EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
-
