@@ -8,7 +8,7 @@
   <ul id="transactions-list">Loading...</ul>
 
   <script>
-    fetch('http://backend-service:3000/transactions')
+    fetch('/api/transactions')
       .then(response => response.json())
       .then(data => {
         const list = document.getElementById('transactions-list');
@@ -26,4 +26,3 @@
   </script>
 </body>
 </html>
-

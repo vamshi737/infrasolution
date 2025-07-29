@@ -9,7 +9,7 @@
   <a href="transactions.html"><button>View Transactions</button></a>
 
   <script>
-    fetch('http://backend-service:3000/balance')
+    fetch('/api/balance')
       .then(response => response.json())
       .then(data => {
         document.getElementById('balance').innerText =

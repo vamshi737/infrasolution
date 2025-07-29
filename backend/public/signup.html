@@ -9,7 +9,7 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      fetch('http://localhost:3000/signup', {
+      fetch('/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -37,8 +37,7 @@
     <button type="submit">Signup</button>
   </form>
   <p id="result"></p>
-
   <br>
-  <a href="login.html">Already have an account? Login</a>
+  <a href="index.html">Already have an account? Login</a>
 </body>
 </html>

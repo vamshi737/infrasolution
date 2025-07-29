@@ -1,4 +1,3 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
@@ -8,21 +7,21 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// ✅ MySQL connection setup for Docker Compose
+// ✅ Serve static frontend files from /public
+app.use(express.static('public'));
+
+// ✅ Define the db connection
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'mysql',       // Use Compose service name
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'Vamsi321',
-  database: process.env.DB_NAME || 'bankdb'
+  host: 'mysql',         // name of your MySQL Kubernetes service
+  user: 'root',
+  password: 'Vamsi321',
+  database: 'bank'
 });
 
-db.connect(err => {
-  if (err) throw err;
-  console.log('✅ Connected to MySQL');
-});
+// ✅ Wrap routes with /api
+const router = express.Router();
 
-// ✅ Login API
-app.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   db.query(
@@ -39,14 +38,11 @@ app.post('/login', (req, res) => {
   );
 });
 
-// ✅ Balance API (Real DB logic can be added later)
-app.get('/balance', (req, res) => {
-  const dummyBalance = 12000.75;
-  res.json({ balance: dummyBalance });
+router.get('/balance', (req, res) => {
+  res.json({ balance: 12000.75 });
 });
 
-// ✅ Transactions API
-app.get('/transactions', (req, res) => {
+router.get('/transactions', (req, res) => {
   const transactions = [
     { date: '2025-07-05', type: 'Deposit', amount: 3000 },
     { date: '2025-07-06', type: 'Withdrawal', amount: 1500 },
@@ -55,19 +51,16 @@ app.get('/transactions', (req, res) => {
   res.json({ transactions });
 });
 
-// ✅ Signup API
-app.post('/signup', (req, res) => {
+router.post('/signup', (req, res) => {
   const { username, password } = req.body;
 
-  // Check if username already exists
   db.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
     if (err) return res.status(500).send('❌ Server error');
-    
+
     if (results.length > 0) {
       return res.status(409).send('⚠️ Username already exists');
     }
 
-    // If not exists, insert new user
     db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, password], (err, result) => {
       if (err) return res.status(500).send('❌ Error saving user');
       res.send('✅ Signup successful!');
@@ -75,8 +68,10 @@ app.post('/signup', (req, res) => {
   });
 });
 
-// ✅ Start the server
-app.listen(3000, "0.0.0.0", () => {
-    console.log("Server running on port 3000");
-});
+// ✅ Register the router under /api
+app.use('/api', router);
 
+// Start server
+app.listen(3000, '0.0.0.0', () => {
+  console.log('✅ Backend running on port 3000');
+});

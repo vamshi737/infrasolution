@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transactions - InfraBank</title>
+</head>
+<body>
+  <h2>Your Recent Transactions</h2>
+  <ul id="transactions-list">Loading...</ul>
+
+  <script>
+    fetch('/api/transactions')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('transactions-list');
+        list.innerHTML = '';
+        data.transactions.forEach(tx => {
+          const li = document.createElement('li');
+          li.textContent = `${tx.date} - ${tx.type} - ₹${tx.amount}`;
+          list.appendChild(li);
+        });
+      })
+      .catch(error => {
+        document.getElementById('transactions-list').innerText = 'Failed to load transactions.';
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
