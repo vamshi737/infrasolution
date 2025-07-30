@@ -1,20 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login - InfraBank</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login to InfraBank</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    .login-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 10px;
+      color: red;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <h2>Login to InfraBank</h2>
-  <form id="loginForm">
-    <label>Username:</label>
-    <input type="text" id="username" required /><br><br>
-    <label>Password:</label>
-    <input type="password" id="password" required /><br><br>
-    <button type="submit">Login</button>
-  </form>
-  <p id="result"></p>
+  <div class="login-container">
+    <h2>Login to InfraBank</h2>
 
-  <!-- ✅ Add this line to load your JS -->
-  <script src="login.js" defer></script>
+    <!-- ✅ Correct form with id -->
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <div id="result"></div>
+    </form>
+  </div>
+
+  <!-- ✅ Correct script placement -->
+  <script src="login.js"></script>
 </body>
 </html>

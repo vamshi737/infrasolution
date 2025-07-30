@@ -1,61 +1,81 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Dashboard - InfraBank</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #333;
+    }
+    .box {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 400px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
-  <h2>Welcome to InfraBank Dashboard</h2>
+  <h1>Welcome to InfraBank Dashboard</h1>
 
-  <h3>💰 Your Balance</h3>
-  <p id="balance">Loading...</p>
+  <div class="box">
+    <h3>💰 Account Balance</h3>
+    <p id="balance">Fetching balance...</p>
+  </div>
 
-  <h3>📄 Recent Transactions</h3>
-  <ul id="transactions">Loading...</ul>
+  <div class="box">
+    <h3>📄 Transactions</h3>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Type</th><th>Amount</th></tr>
+      </thead>
+      <tbody id="transactions">
+        <tr><td colspan="3">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-  <h3>💸 Fund Transfer</h3>
-  <form id="transferForm">
-    <label>Recipient: <input type="text" id="to" required></label><br>
-    <label>Amount: <input type="number" id="amount" required></label><br>
-    <button type="submit">Send Money</button>
-  </form>
-  <p id="transferResult"></p>
-
-  <script>
-    // Fetch balance
-    fetch('http://backend-service:3000/balance')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('balance').textContent = data.balance;
-      })
-      .catch(err => {
-        document.getElementById('balance').textContent = 'Error loading balance.';
-      });
-
-    // Fetch transactions
-    fetch('http://backend-service:3000/transactions')
-      .then(res => res.json())
-      .then(data => {
-        const list = document.getElementById('transactions');
-        list.innerHTML = '';
-        data.transactions.forEach(txn => {
-          const item = document.createElement('li');
-          item.textContent = `${txn.date} - ${txn.type} - ₹${txn.amount}`;
-          list.appendChild(item);
-        });
-      })
-      .catch(err => {
-        document.getElementById('transactions').textContent = 'Error loading transactions.';
-      });
-
-    // Transfer Form
-    document.getElementById('transferForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const to = document.getElementById('to').value;
-      const amount = document.getElementById('amount').value;
-
-      document.getElementById('transferResult').textContent = `✅ ₹${amount} sent to ${to} (dummy logic)`;
+<script>
+  fetch('http://4.255.20.140:3000/api/balance')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('balance').innerText = `₹${data.balance}`;
+    })
+    .catch(err => {
+      document.getElementById('balance').innerText = '❌ Error fetching balance';
     });
-  </script>
-</body>
-</html>
+
+  fetch('http://4.255.20.140:3000/api/transactions')
+    .then(res => res.json())
+    .then(data => {
+      const table = document.getElementById('transactions');
+      table.innerHTML = ''; // Clear old rows
+      data.transactions.forEach(tx => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${tx.date}</td><td>${tx.type}</td><td>${tx.amount}</td>`;
+        table.appendChild(row);
+      });
+    })
+    .catch(err => {
+      document.getElementById('transactions').innerHTML = '<tr><td colspan="3">❌ Error loading transactions</td></tr>';
+    });
+</script>
+
