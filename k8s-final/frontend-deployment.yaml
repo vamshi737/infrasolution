@@ -14,10 +14,9 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: image: vamshipanjala/frontend:clean # ✅ Use your correct DockerHub image
+          image: vamshi737/frontend:clean
           ports:
             - containerPort: 80
-
 ---
 apiVersion: v1
 kind: Service
@@ -31,4 +30,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-
