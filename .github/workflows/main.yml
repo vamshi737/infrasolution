@@ -28,7 +28,7 @@ jobs:
       - name: Build and push Docker image (Frontend)
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend-final   # ✅ updated path here
+          context: ./frontend-final   # ✅ Corrected from ./frontend
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/bank-frontend:latest
 
@@ -46,4 +46,4 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-          kubectl apply -f k8s/
+          kubectl apply -f k8s-final/   # ✅ Corrected from k8s/
