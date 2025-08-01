@@ -28,7 +28,7 @@ jobs:
       - name: Build and push Docker image (Frontend)
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: ./frontend-final   # ✅ updated path here
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/bank-frontend:latest
 
