@@ -9,6 +9,7 @@
       background-color: #f8f9fa;
       text-align: center;
       padding: 40px;
+      position: relative;
     }
     h1 {
       color: #333;
@@ -48,9 +49,11 @@
   </style>
 </head>
 <body>
+
+  <!-- 🔴 Logout Button -->
   <button id="logoutBtn" onclick="logout()">Logout</button>
 
-  <h1>Welcome to InfraBank v3</h1>
+  <h1>Welcome to InfraBank Dashboard</h1>
 
   <div class="box">
     <h3>💰 Account Balance</h3>
@@ -70,16 +73,13 @@
   </div>
 
   <script>
-    // Logout function
+    // ✅ Logout functionality
     function logout() {
-      // Clear localStorage or any data stored for login (simulated)
-      localStorage.clear();
-
-      // Redirect to login page
-      window.location.href = "login.html";
+      localStorage.clear();  // Clear login data
+      window.location.href = "login.html"; // Redirect to login
     }
 
-    // Fetch account balance
+    // ✅ Fetch Balance
     fetch('http://4.255.20.140:3000/api/balance')
       .then(res => res.json())
       .then(data => {
@@ -89,12 +89,12 @@
         document.getElementById('balance').innerText = '❌ Error fetching balance';
       });
 
-    // Fetch transactions
+    // ✅ Fetch Transactions
     fetch('http://4.255.20.140:3000/api/transactions')
       .then(res => res.json())
       .then(data => {
         const table = document.getElementById('transactions');
-        table.innerHTML = ''; // Clear old rows
+        table.innerHTML = '';
         data.transactions.forEach(tx => {
           const row = document.createElement('tr');
           row.innerHTML = `<td>${tx.date}</td><td>${tx.type}</td><td>${tx.amount}</td>`;
@@ -105,5 +105,7 @@
         document.getElementById('transactions').innerHTML = '<tr><td colspan="3">❌ Error loading transactions</td></tr>';
       });
   </script>
+
 </body>
 </html>
+
