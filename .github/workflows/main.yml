@@ -3,6 +3,11 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'frontend-final/**'
+      - 'backend/**'
+      - 'k8s-final/**'
+      - '.github/workflows/**'
 
 jobs:
   deploy:
@@ -46,6 +51,8 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-          ls -l   #  debug: list all folders
-          pwd     #  debug: show working dir
+          echo "✅ Starting AKS Deployment"
+          ls -l
           kubectl apply -f k8s-final/
+          echo " Deployment to AKS Complete"
+
