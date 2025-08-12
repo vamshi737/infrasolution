@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "x" ]
+    branches: [ "main" ]
     paths:
       - 'frontend-final/**'
       - 'backend/**'
